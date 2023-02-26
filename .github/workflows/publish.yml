@@ -7,7 +7,7 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,3 +26,8 @@ jobs:
         env:
           REACT_APP_SHEET_URL: ${{ secrets.REACT_APP_SHEET_URL }}
           CI: false
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
