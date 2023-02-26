@@ -297,7 +297,7 @@ function App() {
           </GridItem>
           <GridItem w="100%" h="10">
             <Select
-              placeholder="Select University"
+              placeholder="เลือกมหาวิทยาลัย"
               value={selectUni}
               onChange={handleUniChange}
             >
@@ -315,7 +315,7 @@ function App() {
           </GridItem>
           <GridItem w="100%" h="10">
             <Select
-              placeholder="Select Faculty"
+              placeholder="เลือกคณะ"
               isDisabled={state < 1}
               value={selectFaculty}
               onChange={handleFacChange}
@@ -334,7 +334,7 @@ function App() {
           </GridItem>
           <GridItem w="100%" h="10">
             <Select
-              placeholder="Select Major"
+              placeholder="เลือกสาขา"
               isDisabled={state < 2}
               value={selectMajor}
               onChange={handleMajorChange}
