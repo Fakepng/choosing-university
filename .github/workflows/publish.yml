@@ -25,3 +25,4 @@ jobs:
         run: pnpm build
         env:
           REACT_APP_SHEET_URL: ${{ secrets.REACT_APP_SHEET_URL }}
+          CI: false
