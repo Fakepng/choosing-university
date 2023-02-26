@@ -4,6 +4,7 @@ import {
   Center,
   Checkbox,
   Container,
+  Divider,
   Grid,
   GridItem,
   Heading,
@@ -29,7 +30,7 @@ function App() {
   const [number, setNumber] = useState(1);
   const [courseName, setCourseName] = useState("");
   const [choose, setChoose] = useState(false);
-  const [sendings, setSendings] = useState(false);
+  const [sending, setSending] = useState(false);
   const [uni, setUni] = useState([]);
   const [selectUni, setSelectUni] = useState("");
   const [state, setState] = useState(0);
@@ -44,17 +45,14 @@ function App() {
 
   const { REACT_APP_SHEET_URL } = process.env;
 
-  const handleSendings = async () => {
-    setSendings(true);
+  const handleSending = async () => {
+    setSending(true);
     if (
       !name ||
       !surname ||
-      !selectUni ||
-      !selectFaculty ||
-      !selectMajor ||
-      !courseName
+      ((!selectUni || !selectFaculty || !selectMajor || !courseName) && !mark)
     ) {
-      setSendings(false);
+      setSending(false);
       toast({
         title: "ผิดพลาด",
         description: "กรอกข้อมูลไม่ครบ",
@@ -80,7 +78,6 @@ function App() {
       const url = `${REACT_APP_SHEET_URL}&name=${name}&surname=${surname}&room=${room}&number=${number}&uni=${selectUni}&fac=${selectFaculty}&major=${selectMajor}&courseName=${courseName}&choose=${choose}&mark=${mark}`;
       await axios.get(url);
       setCourseName("");
-      setUni([]);
       setSelectUni("");
       setState(0);
       setFaculties([]);
@@ -89,7 +86,7 @@ function App() {
       setSelectMajor("");
       setCourse([]);
       setMark("");
-      setSendings(false);
+      setSending(false);
       toast({
         title: "ส่งเรียบร้อย",
         description: "ส่งข้อมูลเรียบร้อย",
@@ -107,7 +104,6 @@ function App() {
     setRoom("");
     setNumber("");
     setCourseName("");
-    setUni([]);
     setSelectUni("");
     setState(0);
     setFaculties([]);
@@ -292,6 +288,8 @@ function App() {
               </NumberInputStepper>
             </NumberInput>
           </GridItem>
+          <Divider />
+          <Divider />
           <GridItem w="100%" h="10">
             <Text fontSize="2xl" align="right">
               มหาวิทยาลัย
@@ -355,6 +353,7 @@ function App() {
           isDisabled={state < 3}
           value={courseName}
           onChange={handleCourseChange}
+          mb={5}
         >
           {course.map((c) => (
             <option key={Object.keys(c)[0]} value={Object.keys(c)[0]}>
@@ -362,22 +361,24 @@ function App() {
             </option>
           ))}
         </Select>
+        <Divider />
         <Input
           placeholder="หมายเหตุ"
           value={mark}
-          my={10}
+          my={5}
           onChange={handleMarkChange}
         />
-        <Stack direction="row" spacing={10} align="center">
+        <Divider />
+        <Stack direction="row" spacing={10} align="center" mt={5}>
           <Checkbox isChecked={choose} onChange={handleChooseChange} size="lg">
             ยืนยันสิทธิ์
           </Checkbox>
           <Button
             colorScheme="green"
             variant="outline"
-            isLoading={sendings}
+            isLoading={sending}
             loadingText="กำลังส่ง"
-            onClick={handleSendings}
+            onClick={handleSending}
           >
             ส่ง
           </Button>
